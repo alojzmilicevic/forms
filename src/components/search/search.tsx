@@ -3,10 +3,11 @@ import Textfield from "../textfield/textfield"
 import { Popover } from '../popover/popover'
 import { blockCategories } from '@/icons/blockCategories'
 import styles from './search.module.scss'
+import type { Block } from '@/manifest.type'
 
 const ALL_BLOCK_TYPES = Object.keys(blockCategories)
 
-export const Search = () => {
+export const Search = ({ onAddBlock }: { onAddBlock: (block: Block) => void }) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [popoverPosition, setPopoverPosition] = useState<{ top: number; left: number } | undefined>()
   const inputRef = useRef<HTMLInputElement | null>(null)
@@ -34,10 +35,20 @@ export const Search = () => {
   }
 
   const handleSelect = (blockType: string) => {
+    // Create a block object
+    const block: Block = {
+      id: crypto.randomUUID(),
+      order: Date.now(), // Use timestamp as order for simplicity
+      required: false,
+      type: blockType as any, // Type assertion since BlockType might not include all types
+    }
+    
+    // Add block to the blocks array
+    onAddBlock(block)
+    
+    // Clear the input and close popover
     if (inputRef.current) {
-      const currentValue = inputRef.current.value
-      const newValue = currentValue.replace(/\/$/, blockType + ' ')
-      inputRef.current.value = newValue
+      inputRef.current.value = ''
       setIsPopoverOpen(false)
       inputRef.current.focus()
     }

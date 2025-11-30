@@ -1,0 +1,88 @@
+.block {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  min-height: 48px;
+}
+
+.hoverArea {
+  position: absolute;
+  right: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  z-index: 10;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s, visibility 0.2s;
+}
+
+.block:hover .controls,
+.hoverArea:hover .controls {
+  opacity: 1;
+  visibility: visible;
+}
+
+.moveButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: grab;
+  padding: 4px;
+  color: #9e9e9e;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #616161;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.moveIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.content {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  width: 0; // Force flex to calculate width properly
+}
+
+.deleteButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  color: #9e9e9e;
+  transition: color 0.2s;
+
+  &:hover {
+    color: #f44336;
+  }
+}
+
+.deleteIcon {
+  width: 24px;
+  height: 24px;
+}
+
