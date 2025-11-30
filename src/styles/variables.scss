@@ -1,0 +1,54 @@
+// Standard spacing unit
+$unit: 8px;
+
+// Common spacing values based on unit
+$spacing-xs: $unit * 0.5;  // 4px
+$spacing-sm: $unit;        // 8px
+$spacing-md: $unit * 2;   // 16px
+$spacing-lg: $unit * 3;    // 24px
+$spacing-xl: $unit * 4;    // 32px
+
+// Ripple effect variables
+$ripple-duration: 1.5s;
+$ripple-size: 300px;
+$ripple-opacity-start: 0.3;
+$ripple-opacity-end: 0;
+
+// Ripple animation
+@keyframes ripple {
+    0% {
+        width: 0;
+        height: 0;
+        opacity: $ripple-opacity-start;
+    }
+    100% {
+        width: $ripple-size;
+        height: $ripple-size;
+        opacity: $ripple-opacity-end;
+    }
+}
+
+// Ripple effect mixin
+@mixin ripple-effect {
+    position: relative;
+    overflow: hidden;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        opacity: 0;
+    }
+    
+    &:active::before {
+        animation: ripple $ripple-duration ease-out;
+    }
+}
+

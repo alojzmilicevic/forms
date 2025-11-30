@@ -1,0 +1,13 @@
+export { CheckboxIcon } from './CheckboxIcon'
+export { ColorPickerIcon } from './ColorPickerIcon'
+export { DateIcon } from './DateIcon'
+export { DividerIcon } from './DividerIcon'
+export { ImageUploadIcon } from './ImageUploadIcon'
+export { NumberInputIcon } from './NumberInputIcon'
+export { TextInputIcon } from './TextInputIcon'
+export { SelectIcon } from './SelectIcon'
+export { H1Icon } from './H1Icon'
+export { H2Icon } from './H2Icon'
+export { H3Icon } from './H3Icon'
+export { TextIcon } from './TextIcon'
+
