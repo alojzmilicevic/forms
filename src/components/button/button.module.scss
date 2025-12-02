@@ -1,32 +1,32 @@
 @use '@/styles/variables' as *;
 
 .button {
-    background-color: #000;
-    color: #fff;
-    padding: $spacing-sm $spacing-md;
-    border-radius: $spacing-sm;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    letter-spacing: 1px;
+  background-color: #000;
+  color: #fff;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $spacing-sm;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  letter-spacing: 1px;
+  display: inline-flex;
+  align-items: center;
+
+  @include ripple-effect;
+
+  &::after {
+    content: '➤';
+    margin-left: $spacing-sm;
+    font-weight: 900;
+    font-size: 20px;
     display: inline-flex;
     align-items: center;
-    
-    @include ripple-effect;
-    
-    &::after {
-        content: '➤';
-        margin-left: $spacing-sm;
-        font-weight: 900;
-        font-size: 20px;
-        display: inline-flex;
-        align-items: center;
-        position: relative;
-        z-index: 1;
-    }
-    
-    &:hover {   
-        background-color: #2a2a2a;
-    }
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    background-color: #2a2a2a;
+  }
 }

@@ -5,12 +5,7 @@ type SelectProps = {
 }
 
 const Select = (props: SelectProps) => {
-  return (
-    <div className={styles.select}>
-      {/* Your implementation */}
-    </div>
-  )
+  return <div className={styles.select}>{/* Your implementation */}</div>
 }
 
 export default Select
-

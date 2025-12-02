@@ -5,12 +5,7 @@ interface ColorProps {
 }
 
 const Color = (props: ColorProps) => {
-  return (
-    <div className={styles.color}>
-      {/* Your implementation */}
-    </div>
-  )
+  return <div className={styles.color}>{/* Your implementation */}</div>
 }
 
 export default Color
-

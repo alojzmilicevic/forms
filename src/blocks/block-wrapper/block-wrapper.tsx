@@ -14,7 +14,12 @@ export const BlockWrapper = ({ children, onDelete }: BlockWrapperProps) => {
       <div className={styles.content}>
         <div className={styles.hoverArea}>
           <div className={styles.controls}>
-            <button className={styles.deleteButton} type="button" onClick={onDelete} aria-label="Delete block">
+            <button
+              className={styles.deleteButton}
+              type="button"
+              onClick={onDelete}
+              aria-label="Delete block"
+            >
               <DeleteIcon className={styles.deleteIcon} />
             </button>
             <button className={styles.moveButton} type="button" aria-label="Move block">
@@ -27,4 +32,3 @@ export const BlockWrapper = ({ children, onDelete }: BlockWrapperProps) => {
     </div>
   )
 }
-

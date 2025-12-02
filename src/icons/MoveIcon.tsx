@@ -15,5 +15,3 @@ export const MoveIcon = ({ className }: { className?: string }) => (
     <circle cx="13" cy="15" r="1.5" fill="currentColor" />
   </svg>
 )
-
-

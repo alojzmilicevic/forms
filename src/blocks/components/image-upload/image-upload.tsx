@@ -5,12 +5,7 @@ interface ImageUploadProps {
 }
 
 const ImageUpload = (props: ImageUploadProps) => {
-  return (
-    <div className={styles.imageUpload}>
-      {/* Your implementation */}
-    </div>
-  )
+  return <div className={styles.imageUpload}>{/* Your implementation */}</div>
 }
 
 export default ImageUpload
-

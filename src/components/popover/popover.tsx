@@ -3,6 +3,7 @@ import { useClickOutside } from '@/hooks/click-outside.hook'
 import { useKeyPress } from '@/hooks/key-press.hook'
 import { getBlockIcon } from '@/icons/blockIconMap'
 import { blockCategories, categoryLabels, type BlockCategory } from '@/icons/blockCategories'
+import { isBlockImplemented } from '@/blocks/block-factory'
 import styles from './popover.module.scss'
 import type { BlockType } from '@/manifest.type'
 
@@ -53,7 +54,10 @@ export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverP
 
   // Get only selectable items (blocks, not categories) for navigation
   const selectableItems = useMemo(() => {
-    return groupedItems.filter((item) => item.type === 'block') as Array<{ type: 'block'; blockType: BlockType }>
+    return groupedItems.filter((item) => item.type === 'block') as Array<{
+      type: 'block'
+      blockType: BlockType
+    }>
   }, [groupedItems])
 
   // Reset selected index when popover opens
@@ -111,7 +115,8 @@ export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverP
   const getSelectedBlockIndex = () => {
     if (selectableItems[selectedIndex]) {
       return groupedItems.findIndex(
-        (item) => item.type === 'block' && item.blockType === selectableItems[selectedIndex].blockType
+        (item) =>
+          item.type === 'block' && item.blockType === selectableItems[selectedIndex].blockType
       )
     }
     return -1
@@ -142,12 +147,13 @@ export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverP
 
           const Icon = getBlockIcon(item.blockType!)
           const isSelected = index === selectedBlockIndex
+          const isImplemented = isBlockImplemented(item.blockType!)
 
           return (
             <li
               key={item.blockType}
-              className={`${styles.item} ${isSelected ? styles.highlighted : ''}`}
-              onClick={() => onSelect(item.blockType!)}
+              className={`${styles.item} ${isSelected ? styles.highlighted : ''} ${!isImplemented ? styles.unimplemented : ''}`}
+              onClick={() => isImplemented && onSelect(item.blockType!)}
             >
               <Icon className={styles.icon} />
               <span>{capitalizeFirst(item.blockType!)}</span>
@@ -158,4 +164,3 @@ export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverP
     </div>
   )
 }
-

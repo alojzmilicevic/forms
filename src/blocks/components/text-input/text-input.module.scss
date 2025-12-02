@@ -15,7 +15,7 @@ $shadow-color-3: rgba(61, 59, 53, 0.08);
   padding: 4px 12px;
   font-size: 16px;
   font-family: inherit;
-  min-width: 360px;  
+  min-width: 360px;
   box-sizing: border-box;
   color: $placeholder-color;
 
@@ -63,12 +63,14 @@ $shadow-color-3: rgba(61, 59, 53, 0.08);
   background-color: #ffffff;
   border: 0px;
   border-radius: $spacing-sm;
-  box-shadow: $shadow-color-1 0px 1px 1px 0px,
+  box-shadow:
+    $shadow-color-1 0px 1px 1px 0px,
     $shadow-color-2 0px 0px 0px 1px,
     $shadow-color-3 0px 2px 5px 0px;
 
   &:hover {
-    box-shadow: $shadow-color-1 0px 1px 1px 0px,
+    box-shadow:
+      $shadow-color-1 0px 1px 1px 0px,
       $shadow-color-2 0px 0px 0px 1px,
       $shadow-color-3 0px 3px 9px 0px,
       $shadow-color-3 0px 2px 5px 0px;
@@ -81,7 +83,8 @@ $shadow-color-3: rgba(61, 59, 53, 0.08);
   border-radius: $spacing-sm;
 
   &:focus {
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0px 0px 0px 4px rgba(0, 0, 0, 0.1);
+    box-shadow:
+      0 0 0 1px rgba(0, 0, 0, 0.1),
+      0px 0px 0px 4px rgba(0, 0, 0, 0.1);
   }
 }
-

@@ -7,7 +7,7 @@ export const blockCategories: Record<string, BlockCategory> = {
   divider: 'layout',
   text: 'layout',
   checkbox: 'input',
-  colorpicker: 'input',
+  color: 'input',
   date: 'input',
   'image-upload': 'input',
   'number-input': 'input',
@@ -19,4 +19,3 @@ export const categoryLabels: Record<BlockCategory, string> = {
   layout: 'Layout blocks',
   input: 'Input blocks',
 }
-

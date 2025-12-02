@@ -5,12 +5,7 @@ interface DateProps {
 }
 
 const Date = (props: DateProps) => {
-  return (
-    <div className={styles.date}>
-      {/* Your implementation */}
-    </div>
-  )
+  return <div className={styles.date}>{/* Your implementation */}</div>
 }
 
 export default Date
-

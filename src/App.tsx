@@ -5,7 +5,6 @@ import { Editor } from './editor/editor'
 import { Preview } from './preview/preview'
 import { Toolbar } from './components/toolbar/toolbar'
 
-
 function App() {
   const [blocks, setBlocks] = useState<Block[]>([])
   const [mode, setMode] = useState<'edit' | 'preview'>('preview')
@@ -17,7 +16,7 @@ function App() {
   const setPreviewMode = () => {
     setMode('preview')
   }
-  
+
   return (
     <div className={styles.outerContainer}>
       <Toolbar onPreviewClick={setPreviewMode} />

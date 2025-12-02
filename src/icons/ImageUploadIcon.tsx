@@ -1,28 +1,11 @@
-export const ImageUploadIcon = ({ className }: { className?: string }) => (
+export const ImageUploadIcon = () => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    height="20px"
+    viewBox="0 -960 960 960"
+    width="20px"
+    fill="#000000"
   >
-    <rect x="3" y="5" width="14" height="12" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
-    <path
-      d="M7 9L9 7L12 10L15 7L17 9V13H7V9Z"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    />
-    <circle cx="7" cy="7" r="1" fill="currentColor" />
-    <path
-      d="M10 2V6M10 14V18M6 10H2M18 10H14"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-    />
+    <path d="M480-480ZM216-144q-29.7 0-50.85-21.5Q144-187 144-216v-528q0-29 21.15-50.5T216-816h312v72H216v528h528v-264h72v264q0 29-21.15 50.5T744-144H216Zm48-144h432L552-480 444-336l-72-96-108 144Zm468-288v-150l-57 57-51-51 144-144 144 144-51 51-57-57v150h-72Z" />
   </svg>
 )
-

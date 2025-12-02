@@ -1,7 +1,7 @@
-import styles from './toolbar.module.scss';
+import styles from './toolbar.module.scss'
 
 interface ToolbarProps {
-  onPreviewClick: () => void;
+  onPreviewClick: () => void
 }
 
 export const Toolbar = ({ onPreviewClick }: ToolbarProps) => {
@@ -14,6 +14,5 @@ export const Toolbar = ({ onPreviewClick }: ToolbarProps) => {
         </div>
       </div>
     </div>
-  );
-};
-
+  )
+}

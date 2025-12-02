@@ -17,5 +17,3 @@ export const DeleteIcon = ({ className }: { className?: string }) => (
     />
   </svg>
 )
-
-

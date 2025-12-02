@@ -20,7 +20,7 @@ type BlockIconMap = {
 
 export const blockIconMap: BlockIconMap = {
   checkbox: CheckboxIcon,
-  colorpicker: ColorPickerIcon,
+  color: ColorPickerIcon,
   date: DateIcon,
   divider: DividerIcon,
   'image-upload': ImageUploadIcon,
@@ -38,4 +38,3 @@ import type { BlockType } from '@/manifest.type'
 export const getBlockIcon = (blockType: BlockType) => {
   return blockIconMap[blockType] || TextIcon
 }
-
