@@ -7,15 +7,15 @@ type Manifest = {
 type Block = {
     id: string;
     order: number;
-    required: boolean;
     type: BlockType;
 }
 
-type TextfieldBlock = Block & {
-    type: "textfield";
+type TextInputBlock = Block & {
+    type: "textinput";
     placeholder: string;
     maxLength: number;
     minLength: number;
+    required: boolean;
 }
 
 type DividerBlock = Block & {
@@ -23,10 +23,33 @@ type DividerBlock = Block & {
     orientation: "horizontal" | "vertical";
 }
 
-type BlockType = "textfield" | "divider";
-type BlockVariant = TextfieldBlock | DividerBlock;
+type NumberInputBlock = Block & {
+    type: "number";
+    placeholder: string;
+    max: number;
+    min: number;
+    required: boolean;
+}
 
-const BLOCK_TYPES: BlockType[] = ["textfield", "divider"];
+type TextBlock = Block & {
+    value: string;
+}
 
-export type { Manifest, Block, TextfieldBlock, DividerBlock, BlockType, BlockVariant };
+type H1Block = TextBlock & {
+    type: "h1";
+}
+
+type H2Block = TextBlock & {
+    type: "h2";
+}
+
+type H3Block = TextBlock & {
+    type: "h3";
+}
+
+const BLOCK_TYPES = ["textinput", "divider", "number", "h1", "h2", "h3", "text"] as const;
+type BlockType = typeof BLOCK_TYPES[number];
+type BlockVariant = TextInputBlock | DividerBlock | NumberInputBlock | H1Block | H2Block | H3Block | TextBlock;
+
+export type { Manifest, Block, TextInputBlock, DividerBlock, BlockType, BlockVariant, NumberInputBlock, H1Block, H2Block, H3Block, TextBlock };
 export { BLOCK_TYPES };

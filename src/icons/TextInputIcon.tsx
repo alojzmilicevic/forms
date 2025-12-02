@@ -1,14 +1,4 @@
-export const TextInputIcon = ({ className }: { className?: string }) => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <rect x="3" y="5" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" />
-    <path d="M6 10H14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
+export const TextInputIcon = () => (
+<svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000"><path d="M192-360v-72h384v72H192Zm0-168v-72h576v72H192Z"/></svg>
 )
 

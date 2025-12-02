@@ -1,13 +1,4 @@
-export const H1Icon = ({ className }: { className?: string }) => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <text x="10" y="14" textAnchor="middle" fontSize="12" fill="currentColor" fontWeight="bold" fontFamily="serif">H1</text>
-  </svg>
+export const H1Icon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000"><path d="M192-288v-384h72v156h168v-156h72v384h-72v-156H264v156h-72Zm504 0v-312h-96v-72h168v384h-72Z" /></svg>
 )
 

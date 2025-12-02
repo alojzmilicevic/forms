@@ -7,12 +7,13 @@ export const MoveIcon = ({ className }: { className?: string }) => (
     xmlns="http://www.w3.org/2000/svg"
     className={className}
   >
-    <circle cx="6" cy="6" r="1.5" fill="currentColor" />
-    <circle cx="14" cy="6" r="1.5" fill="currentColor" />
-    <circle cx="6" cy="10" r="1.5" fill="currentColor" />
-    <circle cx="14" cy="10" r="1.5" fill="currentColor" />
-    <circle cx="6" cy="14" r="1.5" fill="currentColor" />
-    <circle cx="14" cy="14" r="1.5" fill="currentColor" />
+    <circle cx="7" cy="5" r="1.5" fill="currentColor" />
+    <circle cx="13" cy="5" r="1.5" fill="currentColor" />
+    <circle cx="7" cy="10" r="1.5" fill="currentColor" />
+    <circle cx="13" cy="10" r="1.5" fill="currentColor" />
+    <circle cx="7" cy="15" r="1.5" fill="currentColor" />
+    <circle cx="13" cy="15" r="1.5" fill="currentColor" />
   </svg>
 )
+
 

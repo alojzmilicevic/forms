@@ -1,13 +1,6 @@
-export const H2Icon = ({ className }: { className?: string }) => (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className={className}
-  >
-    <text x="10" y="14" textAnchor="middle" fontSize="11" fill="currentColor" fontWeight="bold" fontFamily="serif">H2</text>
+export const H2Icon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" height="20px" viewBox="0 -960 960 960" width="20px" fill="#000000">
+    <path d="M144-288v-384h72v156h168v-156h72v384h-72v-156H216v156h-72Zm384 0v-156q0-29.7 21.15-50.85Q570.3-516 600-516h144v-84H528v-72h216.26Q774-672 795-650.85q21 21.15 21 50.85v84q0 29.7-21.15 50.85Q773.7-444 744-444H600v84h216v72H528Z" />
   </svg>
 )
 

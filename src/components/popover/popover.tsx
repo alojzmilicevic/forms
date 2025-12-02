@@ -1,21 +1,22 @@
 import { useRef, useState, useEffect, useMemo } from 'react'
-import { useClickOutside } from '@/hooks/useClickOutside'
-import { useKeyPress } from '@/hooks/use-key-press.hook'
+import { useClickOutside } from '@/hooks/click-outside.hook'
+import { useKeyPress } from '@/hooks/key-press.hook'
 import { getBlockIcon } from '@/icons/blockIconMap'
 import { blockCategories, categoryLabels, type BlockCategory } from '@/icons/blockCategories'
 import styles from './popover.module.scss'
+import type { BlockType } from '@/manifest.type'
 
 type PopoverItem = {
   type: 'block' | 'category'
-  blockType?: string
+  blockType?: BlockType
   category?: BlockCategory
 }
 
 type PopoverProps = {
   isOpen: boolean
   onClose: () => void
-  onSelect: (blockType: string) => void
-  items: string[]
+  onSelect: (blockType: BlockType) => void
+  items: BlockType[]
   position?: { top: number; left: number }
 }
 
@@ -25,7 +26,7 @@ export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverP
 
   // Group items by category and create flat list with category headers
   const groupedItems = useMemo(() => {
-    const grouped: Record<BlockCategory, string[]> = {
+    const grouped: Record<BlockCategory, BlockType[]> = {
       layout: [],
       input: [],
     }
@@ -52,7 +53,7 @@ export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverP
 
   // Get only selectable items (blocks, not categories) for navigation
   const selectableItems = useMemo(() => {
-    return groupedItems.filter((item) => item.type === 'block') as Array<{ type: 'block'; blockType: string }>
+    return groupedItems.filter((item) => item.type === 'block') as Array<{ type: 'block'; blockType: BlockType }>
   }, [groupedItems])
 
   // Reset selected index when popover opens

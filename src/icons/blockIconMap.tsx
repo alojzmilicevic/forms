@@ -1,16 +1,17 @@
+import type { JSX } from 'react'
 import {
   CheckboxIcon,
   ColorPickerIcon,
   DateIcon,
   DividerIcon,
   ImageUploadIcon,
-  NumberInputIcon,
   TextInputIcon,
   SelectIcon,
   H1Icon,
   H2Icon,
   H3Icon,
   TextIcon,
+  NumberIcon,
 } from './index'
 
 type BlockIconMap = {
@@ -23,16 +24,18 @@ export const blockIconMap: BlockIconMap = {
   date: DateIcon,
   divider: DividerIcon,
   'image-upload': ImageUploadIcon,
-  'number-input': NumberInputIcon,
   textinput: TextInputIcon,
   select: SelectIcon,
   h1: H1Icon,
   h2: H2Icon,
   h3: H3Icon,
   text: TextIcon,
+  number: NumberIcon,
 }
 
-export const getBlockIcon = (blockType: string) => {
+import type { BlockType } from '@/manifest.type'
+
+export const getBlockIcon = (blockType: BlockType) => {
   return blockIconMap[blockType] || TextIcon
 }
 

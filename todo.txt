@@ -1,0 +1,4 @@
+[] - auto scrolling search when tabbing or pressing down/up arrow
+[] - search actually searching when typing after /
+[] - move blocks
+[] - resize blocks

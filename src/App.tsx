@@ -1,59 +1,30 @@
 import { useState } from 'react'
-import { Button } from './components/button/button'
-import Divider from './components/divider/divider'
-import { Search } from './components/search/search'
-import Textfield from './components/textfield/textfield'
-import { Block } from './components/block/block'
-import type { Block as BlockType } from './manifest.type'
+import type { Block } from './manifest.type'
 import styles from './styles/app.module.scss'
+import { Editor } from './editor/editor'
+import { Preview } from './preview/preview'
+import { Toolbar } from './components/toolbar/toolbar'
+
 
 function App() {
-  const [blocks, setBlocks] = useState<BlockType[]>([])
+  const [blocks, setBlocks] = useState<Block[]>([])
+  const [mode, setMode] = useState<'edit' | 'preview'>('preview')
 
-  const handleAddBlock = (block: BlockType) => {
-    setBlocks([...blocks, block])
+  const setEditorMode = () => {
+    setMode('edit')
   }
 
-  const handleDeleteBlock = (blockId: string) => {
-    setBlocks(blocks.filter(block => block.id !== blockId))
+  const setPreviewMode = () => {
+    setMode('preview')
   }
-
-  const renderBlock = (block: BlockType) => {
-    const blockType = block.type as string
-    let blockElement: React.ReactElement | null = null
-
-    switch (blockType) {
-      case 'divider':
-        blockElement = <Divider />
-        break
-      case 'textfield':
-      case 'textinput':
-        blockElement = (
-          <Textfield
-            onChange={() => {}}
-            placeholder="Enter text"
-            variant="outlined"
-          />
-        )
-        break
-      default:
-        return null
-    }
-
-    return (
-      <Block key={block.id} onDelete={() => handleDeleteBlock(block.id)}>
-        {blockElement}
-      </Block>
-    )
-  }
-
+  
   return (
     <div className={styles.outerContainer}>
+      <Toolbar onPreviewClick={setPreviewMode} />
+
       <div className={styles.container}>
-        <h1>Forms App</h1>
-        {blocks.map(renderBlock)}
-        <Search onAddBlock={handleAddBlock} />
-        <Button label="Submit" onClick={() => console.log('Button clicked')} />
+        <Editor blocks={blocks} setBlocks={setBlocks} />
+        <Preview blocks={blocks} mode={mode} setEditorMode={setEditorMode} />
       </div>
     </div>
   )
