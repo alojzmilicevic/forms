@@ -2,6 +2,7 @@ import React from 'react'
 import type {
   Block,
   BlockType,
+  ColorBlock,
   DividerBlock,
   NumberInputBlock,
   TextBlock,
@@ -11,10 +12,7 @@ import TextInput from './components/text-input/text-input'
 import Divider from './components/divider/divider'
 import { EditableText } from './components/editable-text/editable-text'
 import { getBlockIcon } from '@/icons/blockIconMap'
-
-// Block categories for shared logic
-const INPUT_BLOCKS = ['textinput', 'number'] as const
-const TEXT_BLOCKS = ['h1', 'h2', 'h3', 'text'] as const
+import { Color } from './components/color/color'
 
 // Blocks that are fully implemented
 export const IMPLEMENTED_BLOCKS: readonly BlockType[] = [
@@ -25,18 +23,12 @@ export const IMPLEMENTED_BLOCKS: readonly BlockType[] = [
   'h2',
   'h3',
   'text',
+  'color',
 ] as const
 
 export const isBlockImplemented = (type: BlockType): boolean => IMPLEMENTED_BLOCKS.includes(type)
 
-type InputBlockType = (typeof INPUT_BLOCKS)[number]
-type TextBlockType = (typeof TEXT_BLOCKS)[number]
-
-const isInputBlock = (type: BlockType): type is InputBlockType =>
-  INPUT_BLOCKS.includes(type as InputBlockType)
-
-const isTextBlock = (type: BlockType): type is TextBlockType =>
-  TEXT_BLOCKS.includes(type as TextBlockType)
+type TextBlockType = 'h1' | 'h2' | 'h3' | 'text'
 
 export const createBlock = (blockType: BlockType, order: number): Block => {
   const baseBlock = {
@@ -86,6 +78,14 @@ export const createBlock = (blockType: BlockType, order: number): Block => {
       }
       return textBlock
     }
+    case 'color': {
+      const colorBlock: ColorBlock = {
+        ...baseBlock,
+        type: 'color',
+        color: '#000000',
+      }
+      return colorBlock
+    }
     default:
       throw new Error(`Unknown block type: ${blockType}`)
   }
@@ -103,38 +103,45 @@ export const renderEditorBlock = ({
   const { type, ...blockProps } = block
   const Icon = getBlockIcon(type)
 
-  // Input blocks (textinput, number) - edit placeholder field
-  if (isInputBlock(type)) {
-    const { placeholder, ...inputProps } = blockProps as Omit<
-      TextInputBlock | NumberInputBlock,
-      'type'
-    >
-    return React.createElement(TextInput, {
-      onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-        onUpdate({ placeholder: e.target.value } as Partial<Block>),
-      placeholder: 'Type placeholder text',
-      variant: 'outlined',
-      value: placeholder || '',
-      ...inputProps,
-      endIcon: React.createElement(Icon),
-    })
-  }
-
-  if (isTextBlock(type)) {
-    const { value } = blockProps as Omit<TextBlock, 'type'>
-    return React.createElement(EditableText, {
-      value: value || '',
-      onChange: (newValue: string) => onUpdate({ value: newValue } as Partial<Block>),
-      placeholder: getTextPlaceholder(type),
-      tag: type === 'text' ? 'p' : type,
-      editable: true,
-    })
-  }
-
-  // Other blocks
   switch (type) {
+    case 'textinput':
+    case 'number': {
+      const { placeholder, ...inputProps } = blockProps as Omit<
+        TextInputBlock | NumberInputBlock,
+        'type'
+      >
+      return React.createElement(TextInput, {
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+          onUpdate({ placeholder: e.target.value } as Partial<Block>),
+        placeholder: 'Type placeholder text',
+        variant: 'outlined',
+        value: placeholder || '',
+        ...inputProps,
+        endIcon: React.createElement(Icon),
+      })
+    }
+    case 'h1':
+    case 'h2':
+    case 'h3':
+    case 'text': {
+      const { value } = blockProps as Omit<TextBlock, 'type'>
+      return React.createElement(EditableText, {
+        value: value || '',
+        onChange: (newValue: string) => onUpdate({ value: newValue } as Partial<Block>),
+        placeholder: getTextPlaceholder(type),
+        tag: type === 'text' ? 'p' : type,
+        editable: true,
+      })
+    }
     case 'divider':
       return React.createElement(Divider)
+    case 'color':
+      const { color } = blockProps as ColorBlock
+      return React.createElement(Color, {
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+          onUpdate({ color: e.target.value } as ColorBlock),
+        value: color,
+      })
     default:
       return null
   }
@@ -143,31 +150,35 @@ export const renderEditorBlock = ({
 export const renderPreviewBlock = ({ block }: { block: Block }) => {
   const { type, ...blockProps } = block
 
-  // Input blocks - render as TextInput
-  if (isInputBlock(type)) {
-    const inputProps = blockProps as Omit<TextInputBlock | NumberInputBlock, 'type'>
-    return React.createElement(TextInput, {
-      variant: 'outlined',
-      type: getInputType(type),
-      ...inputProps,
-    })
-  }
-
-  // Text blocks - render as static elements
-  if (isTextBlock(type)) {
-    const { value } = blockProps as TextBlock
-    return React.createElement(EditableText, {
-      value: value || '',
-      onChange: () => {},
-      tag: type === 'text' ? 'p' : type,
-      editable: false,
-    })
-  }
-
-  // Other blocks
   switch (type) {
+    case 'textinput':
+    case 'number': {
+      const inputProps = blockProps as Omit<TextInputBlock | NumberInputBlock, 'type'>
+      return React.createElement(TextInput, {
+        variant: 'outlined',
+        type: getInputType(type),
+        ...inputProps,
+      })
+    }
+    case 'h1':
+    case 'h2':
+    case 'h3':
+    case 'text': {
+      const { value } = blockProps as TextBlock
+      return React.createElement(EditableText, {
+        value: value || '',
+        onChange: () => {},
+        tag: type === 'text' ? 'p' : type,
+        editable: false,
+      })
+    }
     case 'divider':
       return React.createElement(Divider)
+    case 'color':
+      const { color } = blockProps as ColorBlock
+      return React.createElement(Color, {
+        value: color,
+      })
     default:
       return null
   }
