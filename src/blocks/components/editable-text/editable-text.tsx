@@ -17,22 +17,21 @@ export const EditableText = ({
   editable = true,
 }: EditableTextProps) => {
   const ref = useRef<HTMLElement>(null)
-  const [isEmpty, setIsEmpty] = useState(!value)
+  const [localEmpty, setLocalEmpty] = useState(() => !value)
 
   useLayoutEffect(() => {
-    if (ref.current && editable) {
+    if (ref.current && editable && ref.current.textContent !== value) {
       ref.current.textContent = value
-      setIsEmpty(!value)
     }
-  }, [])
+  }, [editable, value])
 
   const handleInput = useCallback(() => {
     if (ref.current) {
       const newValue = ref.current.textContent || ''
-      setIsEmpty(!newValue)
+      setLocalEmpty(!newValue)
       onChange(newValue)
     }
-  }, [])
+  }, [onChange])
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
@@ -41,9 +40,10 @@ export const EditableText = ({
   }, [])
 
   const tagClassName = styles[tag as keyof typeof styles] || ''
+  const isEmpty = editable ? localEmpty : !value
 
   const commonProps = {
-    ref: ref as any,
+    ref: ref as React.RefObject<HTMLHeadingElement> & React.RefObject<HTMLParagraphElement>,
     className: `${styles.editableText} ${tagClassName} ${isEmpty ? styles.empty : ''}`,
     'data-placeholder': placeholder,
     ...(editable && {

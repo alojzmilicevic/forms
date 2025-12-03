@@ -78,13 +78,14 @@ export const createBlock = (blockType: BlockType, order: number): Block => {
     case 'h1':
     case 'h2':
     case 'h3':
-    case 'text':
+    case 'text': {
       const textBlock: TextBlock = {
         ...baseBlock,
         type: blockType,
         value: blockType,
       }
       return textBlock
+    }
     default:
       throw new Error(`Unknown block type: ${blockType}`)
   }
@@ -99,14 +100,14 @@ export const renderEditorBlock = ({
   block,
   onUpdate,
 }: RenderBlockProps): React.ReactElement | null => {
-  const { type, id, order, ...blockProps } = block
+  const { type, ...blockProps } = block
   const Icon = getBlockIcon(type)
 
   // Input blocks (textinput, number) - edit placeholder field
   if (isInputBlock(type)) {
     const { placeholder, ...inputProps } = blockProps as Omit<
       TextInputBlock | NumberInputBlock,
-      'type' | 'id' | 'order'
+      'type'
     >
     return React.createElement(TextInput, {
       onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -120,7 +121,7 @@ export const renderEditorBlock = ({
   }
 
   if (isTextBlock(type)) {
-    const { value } = blockProps as Omit<TextBlock, 'type' | 'id' | 'order'>
+    const { value } = blockProps as Omit<TextBlock, 'type'>
     return React.createElement(EditableText, {
       value: value || '',
       onChange: (newValue: string) => onUpdate({ value: newValue } as Partial<Block>),
@@ -140,14 +141,11 @@ export const renderEditorBlock = ({
 }
 
 export const renderPreviewBlock = ({ block }: RenderBlockProps) => {
-  const { type, id, order, ...blockProps } = block
+  const { type, ...blockProps } = block
 
   // Input blocks - render as TextInput
   if (isInputBlock(type)) {
-    const inputProps = blockProps as Omit<
-      TextInputBlock | NumberInputBlock,
-      'type' | 'id' | 'order'
-    >
+    const inputProps = blockProps as Omit<TextInputBlock | NumberInputBlock, 'type'>
     return React.createElement(TextInput, {
       variant: 'outlined',
       type: getInputType(type),
@@ -157,7 +155,7 @@ export const renderPreviewBlock = ({ block }: RenderBlockProps) => {
 
   // Text blocks - render as static elements
   if (isTextBlock(type)) {
-    const { value } = blockProps as Omit<TextBlock, 'type' | 'id' | 'order'>
+    const { value } = blockProps as TextBlock;
     return React.createElement(EditableText, {
       value: value || '',
       onChange: () => {},
