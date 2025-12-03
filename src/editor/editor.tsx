@@ -2,14 +2,18 @@ import { BlockWrapper } from '@/blocks/block-wrapper/block-wrapper'
 import { Button } from '@/components/button/button'
 import { renderEditorBlock, createBlock } from '@/blocks/block-factory'
 import { Search } from './search/search'
-import type { Block as BlockType, BlockType as BlockTypeEnum } from '@/manifest.type'
+import type { Block as BlockType, BlockType as BlockTypeEnum, Manifest } from '@/manifest.type'
+import { EditableText } from '@/blocks/components/editable-text/editable-text'
 
 type EditorProps = {
-  blocks: BlockType[]
+  manifest: Manifest
   setBlocks: (blocks: BlockType[]) => void
+  handleUpdateName: (name: string) => void
 }
 
-export const Editor = ({ blocks, setBlocks }: EditorProps) => {
+export const Editor = ({ manifest, setBlocks, handleUpdateName }: EditorProps) => {
+  const { blocks, name } = manifest
+
   const handleAddBlock = (blockType: BlockTypeEnum) => {
     const block = createBlock(blockType, blocks.length)
     setBlocks([...blocks, block])
@@ -49,7 +53,7 @@ export const Editor = ({ blocks, setBlocks }: EditorProps) => {
 
   return (
     <>
-      <h1>Forms App</h1>
+      <EditableText value={name} onChange={handleUpdateName} tag="h1" editable={true} />
       {blocks.map(renderBlockComponent)}
       <Search onAddBlock={handleAddBlock} />
       <Button label="Submit" onClick={() => console.log('Button clicked')} />

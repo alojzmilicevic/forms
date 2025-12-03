@@ -1,10 +1,10 @@
-import type { Block } from '@/manifest.type'
+import type { Manifest } from '@/manifest.type'
 import styles from './preview.module.scss'
 import { ChevronLeftIcon } from '@/icons/ChevronLeftIcon'
 import { renderPreviewBlock } from '@/blocks/block-factory'
 
 type PreviewProps = {
-  blocks: Block[]
+  manifest: Manifest
   mode: 'edit' | 'preview'
   setEditorMode: () => void
 }
@@ -20,17 +20,18 @@ const ReturnButton = ({ setEditorMode }: { setEditorMode: () => void }) => {
   )
 }
 
-export const Preview = ({ blocks, mode, setEditorMode }: PreviewProps) => {
+export const Preview = ({ manifest, mode, setEditorMode }: PreviewProps) => {
+  const { blocks, name } = manifest
+
   if (mode !== 'preview') return null
 
-  console.log(blocks)
   return (
     <div className={styles.preview}>
       <ReturnButton setEditorMode={setEditorMode} />
       <div className={styles.previewContainer}>
         <div className={styles.previewContent}>
-          <h1>Forms App</h1>
-          {blocks.map((block) => renderPreviewBlock({ block, onUpdate: () => {} }))}
+          <h1>{name}</h1>
+          {blocks.map((block) => renderPreviewBlock({ block }))}
         </div>
       </div>
     </div>

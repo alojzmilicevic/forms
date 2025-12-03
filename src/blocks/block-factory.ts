@@ -140,7 +140,7 @@ export const renderEditorBlock = ({
   }
 }
 
-export const renderPreviewBlock = ({ block }: RenderBlockProps) => {
+export const renderPreviewBlock = ({ block }: { block: Block }) => {
   const { type, ...blockProps } = block
 
   // Input blocks - render as TextInput
@@ -155,7 +155,7 @@ export const renderPreviewBlock = ({ block }: RenderBlockProps) => {
 
   // Text blocks - render as static elements
   if (isTextBlock(type)) {
-    const { value } = blockProps as TextBlock;
+    const { value } = blockProps as TextBlock
     return React.createElement(EditableText, {
       value: value || '',
       onChange: () => {},
