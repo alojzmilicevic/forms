@@ -13,7 +13,7 @@ const ReturnButton = ({ setEditorMode }: { setEditorMode: () => void }) => {
   return (
     <div className={styles.returnButtonContainer}>
       <button className={styles.returnButton} onClick={setEditorMode}>
-        <ChevronLeftIcon className={styles.chevronIcon} />
+        <ChevronLeftIcon />
         Back to editor
       </button>
     </div>

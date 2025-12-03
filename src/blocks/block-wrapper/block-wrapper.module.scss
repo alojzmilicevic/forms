@@ -56,11 +56,6 @@
   }
 }
 
-.moveIcon {
-  width: 24px;
-  height: 24px;
-}
-
 .content {
   position: relative;
   flex: 1;
@@ -82,9 +77,4 @@
   &:hover {
     color: #f44336;
   }
-}
-
-.deleteIcon {
-  width: 24px;
-  height: 24px;
 }

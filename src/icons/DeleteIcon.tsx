@@ -1,19 +1,11 @@
-export const DeleteIcon = ({ className }: { className?: string }) => (
+export const DeleteIcon = () => (
   <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className={className}
+    height="20px"
+    viewBox="0 -960 960 960"
+    width="20px"
+    fill="#000000"
   >
-    <path
-      d="M5 7H15M8 7V5C8 4.44772 8.44772 4 9 4H11C11.5523 4 12 4.44772 12 5V7M8 10V14M12 10V14M6 7L6.5 15C6.5 15.5523 6.94772 16 7.5 16H12.5C13.0523 16 13.5 15.5523 13.5 15L14 7"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill="none"
-    />
+    <path d="M312-144q-29.7 0-50.85-21.15Q240-186.3 240-216v-480h-48v-72h192v-48h192v48h192v72h-48v479.57Q720-186 698.85-165T648-144H312Zm336-552H312v480h336v-480ZM384-288h72v-336h-72v336Zm120 0h72v-336h-72v336ZM312-696v480-480Z" />
   </svg>
 )

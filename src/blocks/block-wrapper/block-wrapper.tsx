@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react'
-import { MoveIcon } from '@/icons/MoveIcon'
+import { DragIcon } from '@/icons/DragIcon'
 import { DeleteIcon } from '@/icons/DeleteIcon'
 import styles from './block-wrapper.module.scss'
 
@@ -20,10 +20,10 @@ export const BlockWrapper = ({ children, onDelete }: BlockWrapperProps) => {
               onClick={onDelete}
               aria-label="Delete block"
             >
-              <DeleteIcon className={styles.deleteIcon} />
+              <DeleteIcon />
             </button>
             <button className={styles.moveButton} type="button" aria-label="Move block">
-              <MoveIcon className={styles.moveIcon} />
+              <DragIcon />
             </button>
           </div>
         </div>
