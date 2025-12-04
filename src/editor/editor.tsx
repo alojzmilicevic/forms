@@ -37,7 +37,7 @@ export const Editor = ({ manifest, setBlocks, handleUpdateName }: EditorProps) =
   const renderBlockComponent = (block: BlockType) => {
     const blockElement = renderEditorBlock({
       block,
-      onUpdate: (updates) => handleUpdateBlock(block.id, updates),
+      onChange: (updates) => handleUpdateBlock(block.id, updates),
     })
 
     if (!blockElement) {
