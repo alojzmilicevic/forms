@@ -87,6 +87,7 @@ type SelectBlock = BaseBlock & {
 type CheckboxBlock = BaseBlock & {
   type: 'checkbox'
   checked: boolean
+  label: string
 }
 
 const BLOCK_TYPES = [
@@ -119,5 +120,7 @@ export type {
   ColorBlock,
   DateBlock,
   ImageUploadBlock,
+  SelectBlock,
+  CheckboxBlock,
 }
 export { BLOCK_TYPES }

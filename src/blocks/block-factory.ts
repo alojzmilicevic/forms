@@ -2,6 +2,7 @@ import React from 'react'
 import type {
   Block,
   BlockType,
+  CheckboxBlock,
   ColorBlock,
   DividerBlock,
   NumberInputBlock,
@@ -12,6 +13,7 @@ import Divider from './components/divider/divider'
 import { EditableText } from './components/editable-text/editable-text'
 import { getBlockIcon } from '@/icons/blockIconMap'
 import { Color } from './components/color/color'
+import Checkbox from './components/checkbox/checkbox'
 
 // Blocks that are fully implemented
 export const IMPLEMENTED_BLOCKS: readonly BlockType[] = [
@@ -82,6 +84,15 @@ export const createBlock = (blockType: BlockType, order: number): Block => {
       }
       return colorBlock
     }
+    case 'checkbox': {
+      const checkboxBlock: CheckboxBlock = {
+        ...baseBlock,
+        type: 'checkbox',
+        checked: false,
+        label: 'Checkbox',
+      }
+      return checkboxBlock
+    }
     default:
       throw new Error(`Unknown block type: ${blockType}`)
   }
@@ -100,6 +111,7 @@ export const renderEditorBlock = ({
     case 'textinput':
     case 'number': {
       return React.createElement(TextInput, {
+        id: block.id,
         onChange: (e) => onChange({ placeholder: e.target.value }),
         placeholder: 'Type placeholder text',
         variant: 'outlined',
@@ -127,6 +139,12 @@ export const renderEditorBlock = ({
         onChange: (e) => onChange({ color: e.target.value }),
       })
     }
+    case 'checkbox': {
+      return React.createElement(Checkbox, {
+        ...block,
+        onChange: (e) => onChange({ checked: e.target.checked }),
+      })
+    }
     default:
       return null
   }
@@ -137,6 +155,7 @@ export const renderPreviewBlock = ({ block }: { block: Block }) => {
     case 'textinput':
     case 'number': {
       return React.createElement(TextInput, {
+        id: block.id,
         variant: 'outlined',
         type: getInputType(block.type),
         placeholder: block.placeholder,
@@ -158,6 +177,11 @@ export const renderPreviewBlock = ({ block }: { block: Block }) => {
     case 'color': {
       return React.createElement(Color, {
         color: block.color,
+      })
+    }
+    case 'checkbox': {
+      return React.createElement(Checkbox, {
+        ...block,
       })
     }
     default:

@@ -31,7 +31,9 @@ export const Preview = ({ manifest, mode, setEditorMode }: PreviewProps) => {
       <div className={styles.previewContainer}>
         <div className={styles.previewContent}>
           <h1>{name}</h1>
-          {blocks.map((block) => renderPreviewBlock({ block }))}
+          {blocks.map((block) => (
+            <div key={block.id}>{renderPreviewBlock({ block })}</div>
+          ))}
         </div>
       </div>
     </div>

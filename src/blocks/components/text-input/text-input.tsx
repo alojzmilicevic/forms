@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import styles from './text-input.module.scss'
 
 type TextInputProps = {
+  id?: string
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
   onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void
   placeholder?: string
@@ -22,6 +23,7 @@ const TextInput = (props: TextInputProps) => {
   return (
     <div className={styles['text-input-wrapper']}>
       <input
+        id={props.id}
         type={props.type || 'text'}
         onChange={props.onChange}
         onKeyDown={props.onKeyDown}
