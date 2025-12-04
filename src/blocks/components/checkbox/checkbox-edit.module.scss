@@ -1,0 +1,14 @@
+.checkboxEditWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.checkboxEdit {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  input:not(:placeholder-shown) {
+    color: #37352f;
+  }
+}

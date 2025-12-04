@@ -14,6 +14,7 @@ import { EditableText } from './components/editable-text/editable-text'
 import { getBlockIcon } from '@/icons/blockIconMap'
 import { Color } from './components/color/color'
 import Checkbox from './components/checkbox/checkbox'
+import { CheckboxEdit } from './components/checkbox/checkbox-edit'
 
 // Blocks that are fully implemented
 export const IMPLEMENTED_BLOCKS: readonly BlockType[] = [
@@ -25,6 +26,7 @@ export const IMPLEMENTED_BLOCKS: readonly BlockType[] = [
   'h3',
   'text',
   'color',
+  'checkbox',
 ] as const
 
 export const isBlockImplemented = (type: BlockType): boolean => IMPLEMENTED_BLOCKS.includes(type)
@@ -89,7 +91,7 @@ export const createBlock = (blockType: BlockType, order: number): Block => {
         ...baseBlock,
         type: 'checkbox',
         checked: false,
-        label: 'Checkbox',
+        label: '',
       }
       return checkboxBlock
     }
@@ -140,9 +142,9 @@ export const renderEditorBlock = ({
       })
     }
     case 'checkbox': {
-      return React.createElement(Checkbox, {
+      return React.createElement(CheckboxEdit, {
         ...block,
-        onChange: (e) => onChange({ checked: e.target.checked }),
+        onChange: (updates) => onChange(updates),
       })
     }
     default:
