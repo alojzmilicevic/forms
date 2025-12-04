@@ -7,7 +7,11 @@ import { BLOCK_TYPES } from '@/manifest.type'
 
 const ALL_BLOCK_TYPES: BlockType[] = Array.from(BLOCK_TYPES)
 
-export const Search = ({ onAddBlock }: { onAddBlock: (blockType: BlockType) => void }) => {
+type SearchProps = {
+  onAddBlock: (blockType: BlockType) => void
+}
+
+export const Search = ({ onAddBlock }: SearchProps) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
   const [popoverPosition, setPopoverPosition] = useState<
     { top: number; left: number } | undefined
@@ -53,6 +57,7 @@ export const Search = ({ onAddBlock }: { onAddBlock: (blockType: BlockType) => v
         onChange={handleChange}
         placeholder="Type '/' to insert blocks"
         variant="standard"
+        id="search-input-text"
       />
       <Popover
         isOpen={isPopoverOpen}

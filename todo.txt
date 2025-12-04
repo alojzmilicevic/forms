@@ -2,3 +2,4 @@
 [] - search actually searching when typing after /
 [] - move blocks
 [] - resize blocks
+[] - share more between preview and editor as far as Styles

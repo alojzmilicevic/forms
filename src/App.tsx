@@ -11,7 +11,7 @@ function App() {
     description: '',
     blocks: [],
   })
-  const [mode, setMode] = useState<'edit' | 'preview'>('preview')
+  const [mode, setMode] = useState<'edit' | 'preview'>('edit')
 
   const setEditorMode = () => {
     setMode('edit')

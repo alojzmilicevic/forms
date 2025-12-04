@@ -82,12 +82,18 @@ type ImageUploadBlock = BaseBlock & {
 type SelectBlock = BaseBlock & {
   type: 'select'
   options: string[]
+  groupId: string
+  groupIndex: number
 }
 
 type CheckboxBlock = BaseBlock & {
   type: 'checkbox'
   checked: boolean
   label: string
+  groupId: string
+  groupIndex: number
+  isLast: boolean
+  isFirst: boolean
 }
 
 const BLOCK_TYPES = [
@@ -105,6 +111,13 @@ const BLOCK_TYPES = [
   'checkbox',
 ] as const
 type BlockType = (typeof BLOCK_TYPES)[number]
+
+type GroupableBlock = CheckboxBlock | SelectBlock
+
+export const isGroupableBlock = (block: Block): block is GroupableBlock => {
+  return 'groupId' in block
+}
+
 export type {
   Manifest,
   Block,
@@ -122,5 +135,6 @@ export type {
   ImageUploadBlock,
   SelectBlock,
   CheckboxBlock,
+  GroupableBlock,
 }
 export { BLOCK_TYPES }

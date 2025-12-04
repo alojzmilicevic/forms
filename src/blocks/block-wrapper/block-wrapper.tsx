@@ -6,11 +6,24 @@ import styles from './block-wrapper.module.scss'
 type BlockWrapperProps = {
   children: ReactNode
   onDelete: () => void
+  blockId: string
+  isLast?: boolean
+  groupId?: string
 }
 
-export const BlockWrapper = ({ children, onDelete }: BlockWrapperProps) => {
+export const BlockWrapper = ({
+  children,
+  onDelete,
+  blockId,
+  isLast,
+  groupId,
+}: BlockWrapperProps) => {
+  const blockClass = [styles.block, groupId && !isLast ? '' : styles.marginBottom]
+    .filter(Boolean)
+    .join(' ')
+
   return (
-    <div className={styles.block}>
+    <div className={blockClass} data-block-id={blockId}>
       <div className={styles.content}>
         <div className={styles.hoverArea}>
           <div className={styles.controls}>

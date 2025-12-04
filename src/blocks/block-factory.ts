@@ -33,10 +33,10 @@ export const isBlockImplemented = (type: BlockType): boolean => IMPLEMENTED_BLOC
 
 type TextBlockType = 'h1' | 'h2' | 'h3' | 'text'
 
-export const createBlock = (blockType: BlockType, order: number): Block => {
+export const createBlock = (blockType: BlockType, blocks: Block[], groupId?: string): Block => {
   const baseBlock = {
     id: crypto.randomUUID(),
-    order,
+    order: blocks.length,
   }
 
   switch (blockType) {
@@ -87,11 +87,21 @@ export const createBlock = (blockType: BlockType, order: number): Block => {
       return colorBlock
     }
     case 'checkbox': {
+      const gId = groupId || crypto.randomUUID()
+      const gIndex = groupId
+        ? blocks.filter((b) => b.type === 'checkbox' && b.groupId === groupId).length
+        : 0
+
       const checkboxBlock: CheckboxBlock = {
         ...baseBlock,
         type: 'checkbox',
         checked: false,
         label: '',
+        groupId: gId,
+        groupIndex: gIndex,
+        isLast:
+          gIndex === blocks.filter((b) => b.type === 'checkbox' && b.groupId === groupId).length,
+        isFirst: gIndex === 0,
       }
       return checkboxBlock
     }
@@ -103,11 +113,15 @@ export const createBlock = (blockType: BlockType, order: number): Block => {
 type RenderBlockProps = {
   block: Block
   onChange: (updates: Partial<Block>) => void
+  onAddBlock: (blockType: BlockType, groupId?: string) => void
+  focusedGroup: string | null
 }
 
 export const renderEditorBlock = ({
   block,
   onChange,
+  onAddBlock,
+  focusedGroup,
 }: RenderBlockProps): React.ReactElement | null => {
   switch (block.type) {
     case 'textinput':
@@ -145,6 +159,8 @@ export const renderEditorBlock = ({
       return React.createElement(CheckboxEdit, {
         ...block,
         onChange: (updates) => onChange(updates),
+        onAddBlock: (groupId: string) => onAddBlock('checkbox', groupId),
+        focusedGroup,
       })
     }
     default:

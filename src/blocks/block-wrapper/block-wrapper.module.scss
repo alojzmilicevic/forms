@@ -5,6 +5,7 @@
   width: 100%;
   min-height: 36px;
   box-sizing: border-box;
+  align-items: center;
 }
 
 .hoverArea {
@@ -77,4 +78,8 @@
   &:hover {
     color: #f44336;
   }
+}
+
+.marginBottom {
+  margin-bottom: 8px;
 }
