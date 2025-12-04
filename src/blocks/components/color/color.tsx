@@ -1,22 +1,17 @@
 import styles from './color.module.scss'
 
 type ColorProps = {
+  color?: string
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-  value?: string
 }
 
-export const Color = ({ onChange, value = '#000000' }: ColorProps) => {
+export const Color = ({ onChange, color = '#000000' }: ColorProps) => {
   return (
     <div className={styles.colorPicker}>
-      <div className={styles.swatch} style={{ backgroundColor: value }}>
-        <input
-          className={styles.input}
-          type="color"
-          onChange={onChange}
-          value={value}
-        />
+      <div className={styles.swatch} style={{ backgroundColor: color }}>
+        <input className={styles.input} type="color" onChange={onChange} value={color} />
       </div>
-      <span className={styles.value}>{value.toUpperCase()}</span>
+      <span className={styles.value}>{color.toUpperCase()}</span>
     </div>
   )
 }

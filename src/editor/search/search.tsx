@@ -5,7 +5,7 @@ import styles from './search.module.scss'
 import type { BlockType } from '@/manifest.type'
 import { BLOCK_TYPES } from '@/manifest.type'
 
-const ALL_BLOCK_TYPES: BlockType[] = BLOCK_TYPES
+const ALL_BLOCK_TYPES: BlockType[] = Array.from(BLOCK_TYPES)
 
 export const Search = ({ onAddBlock }: { onAddBlock: (blockType: BlockType) => void }) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
