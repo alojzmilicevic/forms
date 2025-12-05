@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 
 type useKeyPressProps = {
   keys?: string[]
@@ -12,9 +12,9 @@ type useKeyPressProps = {
 }
 
 export function useKeyPress({
-  keys: mKeys,
-  codes: mCodes,
-  require: mRequire,
+  keys,
+  codes,
+  require,
   disabled,
   onKeyDown,
   onKeyUp,
@@ -22,10 +22,6 @@ export function useKeyPress({
   preventRepeat,
 }: useKeyPressProps) {
   const [keyPressed, setKeyPressed] = useState(false)
-
-  const keys = useMemo(() => mKeys, [])
-  const codes = useMemo(() => mCodes, [])
-  const require = useMemo(() => mRequire, [])
 
   useEffect(() => {
     if (disabled) return
@@ -74,7 +70,7 @@ export function useKeyPress({
       window.removeEventListener('keydown', downHandler)
       window.removeEventListener('keyup', upHandler)
     }
-  }, [codes, keys, onKeyDown, onKeyUp, preventKeyDefault, require, disabled])
+  }, [codes, keys, onKeyDown, onKeyUp, preventKeyDefault, preventRepeat, require, disabled])
 
   return keyPressed
 }

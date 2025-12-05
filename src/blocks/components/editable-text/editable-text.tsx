@@ -1,4 +1,4 @@
-import { useRef, useCallback, useLayoutEffect, useState } from 'react'
+import { useRef, useLayoutEffect, useState } from 'react'
 import styles from './editable-text.module.scss'
 
 type EditableTextProps = {
@@ -25,19 +25,19 @@ export const EditableText = ({
     }
   }, [editable, value])
 
-  const handleInput = useCallback(() => {
+  const handleInput = () => {
     if (ref.current) {
       const newValue = ref.current.textContent || ''
       setLocalEmpty(!newValue)
       onChange(newValue)
     }
-  }, [onChange])
+  }
 
-  const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       e.preventDefault()
     }
-  }, [])
+  }
 
   const tagClassName = styles[tag as keyof typeof styles] || ''
   const isEmpty = editable ? localEmpty : !value

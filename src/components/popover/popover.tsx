@@ -1,4 +1,4 @@
-import { useRef, useState, useMemo } from 'react'
+import { useRef, useState } from 'react'
 import { useClickOutside } from '@/hooks/click-outside.hook'
 import { useKeyPress } from '@/hooks/key-press.hook'
 import { getBlockIcon } from '@/icons/blockIconMap'
@@ -25,40 +25,36 @@ const PopoverContent = ({ onClose, onSelect, items, position }: Omit<PopoverProp
   const popoverRef = useRef<HTMLDivElement>(null)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
-  // Group items by category and create flat list with category headers
-  const groupedItems = useMemo(() => {
-    const grouped: Record<BlockCategory, BlockType[]> = {
-      layout: [],
-      input: [],
+  // Group items by category - React Compiler will memoize this
+  const grouped: Record<BlockCategory, BlockType[]> = {
+    layout: [],
+    input: [],
+  }
+
+  items.forEach((item) => {
+    const category = blockCategories[item] || 'input'
+    grouped[category].push(item)
+  })
+
+  const flatList: PopoverItem[] = []
+  const categoryOrder: BlockCategory[] = ['layout', 'input']
+
+  categoryOrder.forEach((category) => {
+    if (grouped[category].length > 0) {
+      flatList.push({ type: 'category', category })
+      grouped[category].forEach((blockType) => {
+        flatList.push({ type: 'block', blockType })
+      })
     }
+  })
 
-    items.forEach((item) => {
-      const category = blockCategories[item] || 'input'
-      grouped[category].push(item)
-    })
-
-    const flatList: PopoverItem[] = []
-    const categoryOrder: BlockCategory[] = ['layout', 'input']
-
-    categoryOrder.forEach((category) => {
-      if (grouped[category].length > 0) {
-        flatList.push({ type: 'category', category })
-        grouped[category].forEach((blockType) => {
-          flatList.push({ type: 'block', blockType })
-        })
-      }
-    })
-
-    return flatList
-  }, [items])
+  const groupedItems = flatList
 
   // Get only selectable items (blocks, not categories) for navigation
-  const selectableItems = useMemo(() => {
-    return groupedItems.filter((item) => item.type === 'block') as Array<{
-      type: 'block'
-      blockType: BlockType
-    }>
-  }, [groupedItems])
+  const selectableItems = groupedItems.filter((item) => item.type === 'block') as Array<{
+    type: 'block'
+    blockType: BlockType
+  }>
 
   useClickOutside(popoverRef, {
     enabled: true,
