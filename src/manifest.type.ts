@@ -84,6 +84,8 @@ type SelectBlock = BaseBlock & {
   options: string[]
   groupId: string
   groupIndex: number
+  isLast: boolean
+  isFirst: boolean
 }
 
 type CheckboxBlock = BaseBlock & {

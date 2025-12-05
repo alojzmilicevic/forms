@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, useMemo } from 'react'
+import { useRef, useState, useMemo } from 'react'
 import { useClickOutside } from '@/hooks/click-outside.hook'
 import { useKeyPress } from '@/hooks/key-press.hook'
 import { getBlockIcon } from '@/icons/blockIconMap'
@@ -21,7 +21,7 @@ type PopoverProps = {
   position?: { top: number; left: number }
 }
 
-export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverProps) => {
+const PopoverContent = ({ onClose, onSelect, items, position }: Omit<PopoverProps, 'isOpen'>) => {
   const popoverRef = useRef<HTMLDivElement>(null)
   const [selectedIndex, setSelectedIndex] = useState(0)
 
@@ -60,27 +60,20 @@ export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverP
     }>
   }, [groupedItems])
 
-  // Reset selected index when popover opens
-  useEffect(() => {
-    if (isOpen) {
-      setSelectedIndex(0)
-    }
-  }, [isOpen])
-
   useClickOutside(popoverRef, {
-    enabled: isOpen,
+    enabled: true,
     handler: onClose,
   })
 
   useKeyPress({
     keys: ['Escape'],
-    disabled: !isOpen,
+    disabled: false,
     onKeyDown: () => onClose(),
   })
 
   useKeyPress({
     keys: ['ArrowDown'],
-    disabled: !isOpen,
+    disabled: false,
     onKeyDown: (e) => {
       e.preventDefault()
       setSelectedIndex((prev) => (prev < selectableItems.length - 1 ? prev + 1 : 0))
@@ -89,7 +82,7 @@ export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverP
 
   useKeyPress({
     keys: ['ArrowUp'],
-    disabled: !isOpen,
+    disabled: false,
     onKeyDown: (e) => {
       e.preventDefault()
       setSelectedIndex((prev) => (prev > 0 ? prev - 1 : selectableItems.length - 1))
@@ -98,7 +91,7 @@ export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverP
 
   useKeyPress({
     keys: ['Enter'],
-    disabled: !isOpen,
+    disabled: false,
     onKeyDown: (e) => {
       e.preventDefault()
       if (selectableItems[selectedIndex]?.blockType) {
@@ -123,8 +116,6 @@ export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverP
   }
 
   const selectedBlockIndex = getSelectedBlockIndex()
-
-  if (!isOpen) return null
 
   return (
     <div
@@ -163,4 +154,10 @@ export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverP
       </ul>
     </div>
   )
+}
+
+export const Popover = ({ isOpen, onClose, onSelect, items, position }: PopoverProps) => {
+  if (!isOpen) return null
+
+  return <PopoverContent onClose={onClose} onSelect={onSelect} items={items} position={position} />
 }
