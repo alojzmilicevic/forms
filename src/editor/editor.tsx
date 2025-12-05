@@ -5,7 +5,8 @@ import { Search } from './search/search'
 import type { Block as BlockType, BlockType as BlockTypeEnum, Manifest } from '@/manifest.type'
 import { isGroupableBlock } from '@/manifest.type'
 import { EditableText } from '@/blocks/components/editable-text/editable-text'
-import { useState, useRef, useEffect } from 'react'
+import { useRef } from 'react'
+import { useGroupFocus } from '@/hooks/use-group-focus.hook'
 import styles from './editor.module.scss'
 
 type EditorProps = {
@@ -40,8 +41,8 @@ const recalculateGroup = (blocks: BlockType[], groupId: string): BlockType[] => 
 
 export const Editor = ({ manifest, setBlocks, handleUpdateName }: EditorProps) => {
   const { blocks, name } = manifest
-  const [focusedGroup, setFocusedGroup] = useState<string | null>(null)
   const editorRef = useRef<HTMLDivElement>(null)
+  const { focusedGroup, setFocusedGroup } = useGroupFocus(editorRef, blocks)
 
   const handleAddBlock = (blockType: BlockTypeEnum, groupId?: string) => {
     const block = createBlock(blockType, blocks, groupId)
@@ -89,39 +90,6 @@ export const Editor = ({ manifest, setBlocks, handleUpdateName }: EditorProps) =
       setBlocks(newBlocks)
     }
   }
-
-  useEffect(() => {
-    const handleFocus = (blockId: string) => {
-      const block = blocks.find((b) => b.id === blockId)
-      if (!block) return
-
-      const newGroupId = block.type === 'checkbox' ? block.groupId : null
-      if (focusedGroup === newGroupId) return
-      setFocusedGroup(newGroupId)
-    }
-
-    const handleFocusCapture = (event: FocusEvent) => {
-      const target = event.target as HTMLElement
-      const blockElement = target.closest('[data-block-id]') as HTMLElement
-      if (blockElement) {
-        const blockId = blockElement.getAttribute('data-block-id')
-        if (blockId) {
-          handleFocus(blockId)
-        }
-      }
-    }
-
-    const editorElement = editorRef.current
-    if (editorElement) {
-      editorElement.addEventListener('focus', handleFocusCapture, true)
-    }
-
-    return () => {
-      if (editorElement) {
-        editorElement.removeEventListener('focus', handleFocusCapture, true)
-      }
-    }
-  }, [focusedGroup, blocks])
 
   const handleUpdateBlock = (blockId: string, updates: Partial<BlockType>) => {
     setBlocks(
