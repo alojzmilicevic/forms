@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { useClickOutside } from '@/hooks/click-outside.hook'
 import { useKeyPress } from '@/hooks/key-press.hook'
+import { useScrollIntoView } from '@/hooks/scroll-into-view.hook'
 import { getBlockIcon } from '@/icons/blockIconMap'
 import { blockCategories, categoryLabels, type BlockCategory } from '@/icons/blockCategories'
 import { isBlockImplemented } from '@/blocks/block-factory'
@@ -113,6 +114,13 @@ const PopoverContent = ({ onClose, onSelect, items, position }: Omit<PopoverProp
 
   const selectedBlockIndex = getSelectedBlockIndex()
 
+  // Scroll selected item into view when navigating with keyboard
+  useScrollIntoView({
+    containerRef: popoverRef,
+    selector: selectedBlockIndex >= 0 ? `[data-index="${selectedBlockIndex}"]` : null,
+    block: 'center',
+  })
+
   return (
     <div
       ref={popoverRef}
@@ -139,6 +147,7 @@ const PopoverContent = ({ onClose, onSelect, items, position }: Omit<PopoverProp
           return (
             <li
               key={item.blockType}
+              data-index={index}
               className={`${styles.item} ${isSelected ? styles.highlighted : ''} ${!isImplemented ? styles.unimplemented : ''}`}
               onClick={() => isImplemented && onSelect(item.blockType!)}
             >

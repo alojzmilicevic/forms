@@ -13,19 +13,33 @@ type SearchProps = {
 
 export const Search = ({ onAddBlock }: SearchProps) => {
   const [isPopoverOpen, setIsPopoverOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const [popoverPosition, setPopoverPosition] = useState<
     { top: number; left: number } | undefined
   >()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
+  // Filter block types based on search query
+  const filteredBlockTypes = searchQuery
+    ? ALL_BLOCK_TYPES.filter((type) =>
+        type.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    : ALL_BLOCK_TYPES
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const input = event.target
     const value = input.value
-    const lastChar = value[value.length - 1]
 
-    if (lastChar === '/') {
-      if (containerRef.current) {
+    // Check if there's a `/` in the value
+    const slashIndex = value.lastIndexOf('/')
+
+    if (slashIndex !== -1) {
+      // Extract search query after the `/`
+      const query = value.slice(slashIndex + 1)
+      setSearchQuery(query)
+
+      if (!isPopoverOpen && containerRef.current) {
         const rect = input.getBoundingClientRect()
         const containerRect = containerRef.current.getBoundingClientRect()
         setPopoverPosition({
@@ -35,8 +49,10 @@ export const Search = ({ onAddBlock }: SearchProps) => {
         setIsPopoverOpen(true)
         inputRef.current = input
       }
-    } else if (isPopoverOpen && value.length > 0 && !value.includes('/')) {
+    } else {
+      // No slash, close popover
       setIsPopoverOpen(false)
+      setSearchQuery('')
     }
   }
 
@@ -47,8 +63,14 @@ export const Search = ({ onAddBlock }: SearchProps) => {
     if (inputRef.current) {
       inputRef.current.value = ''
       setIsPopoverOpen(false)
+      setSearchQuery('')
       inputRef.current.focus()
     }
+  }
+
+  const handleClose = () => {
+    setIsPopoverOpen(false)
+    setSearchQuery('')
   }
 
   return (
@@ -61,9 +83,9 @@ export const Search = ({ onAddBlock }: SearchProps) => {
       />
       <Popover
         isOpen={isPopoverOpen}
-        onClose={() => setIsPopoverOpen(false)}
+        onClose={handleClose}
         onSelect={handleSelect}
-        items={ALL_BLOCK_TYPES}
+        items={filteredBlockTypes}
         position={popoverPosition}
       />
     </div>

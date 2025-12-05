@@ -16,6 +16,7 @@ type EditorStore = {
   manifest: Manifest
   mode: 'edit' | 'preview'
   focusedGroup: string | null
+  lastAddedBlockId: string | null
 
   // Actions
   setMode: (mode: 'edit' | 'preview') => void
@@ -24,6 +25,7 @@ type EditorStore = {
   deleteBlock: (blockId: string) => void
   updateBlock: (blockId: string, updates: Partial<Block>) => void
   updateName: (name: string) => void
+  clearLastAddedBlockId: () => void
 }
 
 const recalculateGroup = (blocks: Block[], groupId: string): Block[] => {
@@ -133,10 +135,13 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
   },
   mode: 'edit',
   focusedGroup: null,
+  lastAddedBlockId: null,
 
   setMode: (mode) => set({ mode }),
 
   setFocusedGroup: (groupId) => set({ focusedGroup: groupId }),
+
+  clearLastAddedBlockId: () => set({ lastAddedBlockId: null }),
 
   addBlock: (blockType, groupId) => {
     const { manifest } = get()
@@ -161,6 +166,8 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
           ...manifest,
           blocks: recalculateGroup(newBlocks, block.groupId),
         },
+        lastAddedBlockId: block.id,
+        focusedGroup: block.groupId,
       })
     } else {
       newBlocks = [...blocks, block]
@@ -169,6 +176,7 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
           ...manifest,
           blocks: newBlocks,
         },
+        lastAddedBlockId: block.id,
       })
     }
   },

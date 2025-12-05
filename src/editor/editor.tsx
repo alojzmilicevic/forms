@@ -7,6 +7,7 @@ import { isGroupableBlock } from '@/manifest.type'
 import { EditableText } from '@/blocks/components/editable-text/editable-text'
 import { useRef, useEffect } from 'react'
 import { useEditorStore } from '@/store/editor-store'
+import { useScrollIntoView } from '@/hooks/scroll-into-view.hook'
 import styles from './editor.module.scss'
 
 export const Editor = () => {
@@ -15,10 +16,21 @@ export const Editor = () => {
   const blocks = useEditorStore((state) => state.manifest.blocks)
   const name = useEditorStore((state) => state.manifest.name)
   const focusedGroup = useEditorStore((state) => state.focusedGroup)
+  const lastAddedBlockId = useEditorStore((state) => state.lastAddedBlockId)
   const setFocusedGroup = useEditorStore((state) => state.setFocusedGroup)
   const addBlock = useEditorStore((state) => state.addBlock)
   const deleteBlock = useEditorStore((state) => state.deleteBlock)
   const updateName = useEditorStore((state) => state.updateName)
+  const clearLastAddedBlockId = useEditorStore((state) => state.clearLastAddedBlockId)
+
+  // Scroll newly added blocks into view and focus the input
+  useScrollIntoView({
+    containerRef: editorRef,
+    selector: lastAddedBlockId ? `[data-block-id="${lastAddedBlockId}"]` : null,
+    onScrolled: clearLastAddedBlockId,
+    focus: true,
+    offsetByElementHeight: true,
+  })
 
   // Handle focus tracking for groups
   useEffect(() => {
