@@ -9,6 +9,15 @@ type CheckboxEditProps = CheckboxBlock & {
   focusedGroup: string | null
 }
 
+const AddButton = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <div className={styles.addButtonWrapper}>
+      <Checkbox id={"new-checkbox-option"} checked={false} label={undefined} disabled />
+      <button onClick={onClick} className={styles.addButton}>Add option</button>
+    </div>
+  )
+}
+
 const CheckboxEdit = ({
   id,
   checked,
@@ -33,8 +42,8 @@ const CheckboxEdit = ({
           placeholder={`Option ${groupIndex + 1}`}
           value={label}
         />
-        {show && <button onClick={() => onAddBlock(groupId)}>+</button>}
       </div>
+      {show && <AddButton onClick={() => onAddBlock(groupId)} />}
     </div>
   )
 }
