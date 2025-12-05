@@ -1,115 +1,61 @@
 import { BlockWrapper } from '@/blocks/block-wrapper/block-wrapper'
 import { Button } from '@/components/button/button'
-import { renderEditorBlock, createBlock } from '@/blocks/block-factory'
+import { renderEditorBlock } from '@/blocks/block-factory'
 import { Search } from './search/search'
-import type { Block as BlockType, BlockType as BlockTypeEnum, Manifest } from '@/manifest.type'
+import type { Block as BlockType } from '@/manifest.type'
 import { isGroupableBlock } from '@/manifest.type'
 import { EditableText } from '@/blocks/components/editable-text/editable-text'
-import { useRef } from 'react'
-import { useGroupFocus } from '@/hooks/use-group-focus.hook'
+import { useRef, useEffect } from 'react'
+import { useEditorStore } from '@/store/editor-store'
 import styles from './editor.module.scss'
 
-type EditorProps = {
-  manifest: Manifest
-  setBlocks: (blocks: BlockType[]) => void
-  handleUpdateName: (name: string) => void
-}
-
-const recalculateGroup = (blocks: BlockType[], groupId: string): BlockType[] => {
-  const groupBlocks = blocks.filter((b) => isGroupableBlock(b) && b.groupId === groupId)
-  const maxIndex = groupBlocks.length - 1
-
-  // Create a map of block ID to new groupIndex
-  const groupIndexMap = new Map<string, number>()
-  groupBlocks.forEach((block, index) => {
-    groupIndexMap.set(block.id, index)
-  })
-
-  return blocks.map((b) => {
-    if (isGroupableBlock(b) && b.groupId === groupId) {
-      const newGroupIndex = groupIndexMap.get(b.id) ?? b.groupIndex
-      return {
-        ...b,
-        groupIndex: newGroupIndex,
-        isLast: newGroupIndex === maxIndex,
-        isFirst: newGroupIndex === 0,
-      }
-    }
-    return b
-  })
-}
-
-export const Editor = ({ manifest, setBlocks, handleUpdateName }: EditorProps) => {
-  const { blocks, name } = manifest
+export const Editor = () => {
   const editorRef = useRef<HTMLDivElement>(null)
-  const { focusedGroup, setFocusedGroup } = useGroupFocus(editorRef, blocks)
 
-  const handleAddBlock = (blockType: BlockTypeEnum, groupId?: string) => {
-    const block = createBlock(blockType, blocks, groupId)
-    let newBlocks: BlockType[]
+  const blocks = useEditorStore((state) => state.manifest.blocks)
+  const name = useEditorStore((state) => state.manifest.name)
+  const focusedGroup = useEditorStore((state) => state.focusedGroup)
+  const setFocusedGroup = useEditorStore((state) => state.setFocusedGroup)
+  const addBlock = useEditorStore((state) => state.addBlock)
+  const deleteBlock = useEditorStore((state) => state.deleteBlock)
+  const updateName = useEditorStore((state) => state.updateName)
 
-    if (isGroupableBlock(block) && groupId) {
-      const groupBlocks = blocks.filter((b) => isGroupableBlock(b) && b.groupId === groupId)
-      if (groupBlocks.length > 0) {
-        const lastGroupBlock = groupBlocks[groupBlocks.length - 1]
-        const insertIndex = blocks.findIndex((b) => b.id === lastGroupBlock.id) + 1
+  // Handle focus tracking for groups
+  useEffect(() => {
+    const handleFocus = (blockId: string) => {
+      const block = blocks.find((b) => b.id === blockId)
+      if (!block) return
 
-        newBlocks = [...blocks.slice(0, insertIndex), block, ...blocks.slice(insertIndex)]
-
-        newBlocks = newBlocks.map((b, index) => ({ ...b, order: index }))
-      } else {
-        newBlocks = [...blocks, block]
-      }
-
-      setBlocks(recalculateGroup(newBlocks, block.groupId))
-    } else {
-      newBlocks = [...blocks, block]
-      setBlocks(newBlocks)
+      const newGroupId = block.type === 'checkbox' ? block.groupId : null
+      if (focusedGroup === newGroupId) return
+      setFocusedGroup(newGroupId)
     }
-  }
 
-  const handleDeleteBlock = (blockId: string) => {
-    const blockToDelete = blocks.find((b) => b.id === blockId)
-    let newBlocks = blocks.filter((block) => block.id !== blockId)
-
-    // Update order for all remaining blocks
-    newBlocks = newBlocks.map((b, index) => ({ ...b, order: index }))
-
-    if (blockToDelete && isGroupableBlock(blockToDelete)) {
-      const updatedBlocks = recalculateGroup(newBlocks, blockToDelete.groupId)
-      setBlocks(updatedBlocks)
-
-      // If the deleted block was in the focused group and the group is now empty, clear focus
-      const remainingGroupBlocks = updatedBlocks.filter(
-        (b) => isGroupableBlock(b) && b.groupId === blockToDelete.groupId
-      )
-      if (focusedGroup === blockToDelete.groupId && remainingGroupBlocks.length === 0) {
-        setFocusedGroup(null)
-      }
-    } else {
-      setBlocks(newBlocks)
-    }
-  }
-
-  const handleUpdateBlock = (blockId: string, updates: Partial<BlockType>) => {
-    setBlocks(
-      blocks.map((b) => {
-        if (b.id === blockId) {
-          return { ...b, ...updates } as BlockType
+    const handleFocusCapture = (event: FocusEvent) => {
+      const target = event.target as HTMLElement
+      const blockElement = target.closest('[data-block-id]') as HTMLElement
+      if (blockElement) {
+        const blockId = blockElement.getAttribute('data-block-id')
+        if (blockId) {
+          handleFocus(blockId)
         }
-        return b
-      })
-    )
-  }
+      }
+    }
+
+    const editorElement = editorRef.current
+    if (editorElement) {
+      editorElement.addEventListener('focus', handleFocusCapture, true)
+    }
+
+    return () => {
+      if (editorElement) {
+        editorElement.removeEventListener('focus', handleFocusCapture, true)
+      }
+    }
+  }, [focusedGroup, blocks, setFocusedGroup])
 
   const renderBlockComponent = (block: BlockType) => {
-    const blockElement = renderEditorBlock({
-      block,
-      onChange: (updates) => handleUpdateBlock(block.id, updates),
-      onAddBlock: (blockType: BlockTypeEnum, groupId?: string) =>
-        handleAddBlock(blockType, groupId),
-      focusedGroup,
-    })
+    const blockElement = renderEditorBlock(block)
 
     if (!blockElement) {
       return null
@@ -117,7 +63,7 @@ export const Editor = ({ manifest, setBlocks, handleUpdateName }: EditorProps) =
 
     const wrapperProps = {
       blockId: block.id,
-      onDelete: () => handleDeleteBlock(block.id),
+      onDelete: () => deleteBlock(block.id),
       ...(isGroupableBlock(block) && {
         isLast: block.isLast,
         groupId: block.groupId,
@@ -133,9 +79,9 @@ export const Editor = ({ manifest, setBlocks, handleUpdateName }: EditorProps) =
 
   return (
     <div ref={editorRef} className={styles.editor}>
-      <EditableText value={name} onChange={handleUpdateName} tag="h1" editable={true} />
+      <EditableText value={name} onChange={updateName} tag="h1" editable={true} />
       <div className={styles.blocksContainer}>{blocks.map(renderBlockComponent)}</div>
-      <Search onAddBlock={handleAddBlock} />
+      <Search onAddBlock={addBlock} />
       <Button label="Submit" onClick={() => console.log('Button clicked')} />
     </div>
   )
