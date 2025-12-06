@@ -1,5 +1,10 @@
-[] - auto scrolling search when tabbing or pressing down/up arrow
-[] - search actually searching when typing after /
 [] - move blocks
 [] - resize blocks
 [] - share more between preview and editor as far as Styles
+[] - context menu: required, format (for numbers), min number, max number, min char, max char, different context options based on field per field
+[] - theme
+[] - customize bg, text, button bg, button text, accent
+[] - group folding
+[] - form width full vs fixed
+[] - insert block below
+[] - might be worth looking into a vercel component library

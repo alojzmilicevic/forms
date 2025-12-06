@@ -25,7 +25,10 @@
   align-items: center;
   gap: 4px;
   opacity: 0;
+
   visibility: hidden;
+  margin-top: 4px;
+
   transition:
     opacity 0.2s,
     visibility 0.2s;
