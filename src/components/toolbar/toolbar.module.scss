@@ -1,15 +1,20 @@
+@use '@/styles/variables' as *;
+
 .toolbar {
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
+  background-color: #ffffff;
 }
 
 .toolbarContent {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-height: 48px;
+  padding: 0 $spacing-md;
 }
 
 .toolbarLeft {

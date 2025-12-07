@@ -1,8 +1,30 @@
+.appWrapper {
+  display: flex;
+  min-height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  min-width: 0; /* Important for flex children to shrink properly */
+  display: flex;
+  flex-direction: column;
+  transition: margin-right 0.3s ease-in-out;
+
+  &.drawerOpen {
+    margin-right: 300px;
+  }
+
+  &.previewMode {
+    overflow: hidden;
+    height: 100vh;
+  }
+}
+
 .outerContainer {
+  flex: 1;
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
-  min-height: 100vh;
   background-color: #ffffff;
   background-image: radial-gradient(circle, #e0e0e0 1px, transparent 1px);
   background-size: 24px 24px;

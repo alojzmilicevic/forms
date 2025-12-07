@@ -17,9 +17,11 @@ type EditorStore = {
   mode: 'edit' | 'preview'
   focusedGroup: string | null
   lastAddedBlockId: string | null
+  customizeDrawerOpen: boolean
 
   // Actions
   setMode: (mode: 'edit' | 'preview') => void
+  toggleCustomizeDrawer: () => void
   setFocusedGroup: (groupId: string | null) => void
   addBlock: (blockType: BlockType, groupId?: string) => void
   deleteBlock: (blockId: string) => void
@@ -117,7 +119,8 @@ const createBlock = (blockType: BlockType, blocks: Block[], groupId?: string): B
         label: '',
         groupId: gId,
         groupIndex: gIndex,
-        isLast: gIndex === blocks.filter((b) => b.type === 'checkbox' && b.groupId === groupId).length,
+        isLast:
+          gIndex === blocks.filter((b) => b.type === 'checkbox' && b.groupId === groupId).length,
         isFirst: gIndex === 0,
       }
       return checkboxBlock
@@ -135,11 +138,14 @@ export const useEditorStore = create<EditorStore>((set, get) => ({
   },
   mode: 'edit',
   focusedGroup: null,
+  customizeDrawerOpen: false,
   lastAddedBlockId: null,
 
   setMode: (mode) => set({ mode }),
 
   setFocusedGroup: (groupId) => set({ focusedGroup: groupId }),
+
+  toggleCustomizeDrawer: () => set({ customizeDrawerOpen: !get().customizeDrawerOpen }),
 
   clearLastAddedBlockId: () => set({ lastAddedBlockId: null }),
 

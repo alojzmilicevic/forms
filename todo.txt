@@ -8,3 +8,4 @@
 [] - form width full vs fixed
 [] - insert block below
 [] - might be worth looking into a vercel component library
+[] - undo/redo

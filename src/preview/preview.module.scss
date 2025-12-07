@@ -18,8 +18,9 @@ $shadow-color-3: rgba(61, 59, 53, 0.08);
   right: 0;
   bottom: 0;
   background-color: #ffffff;
-  z-index: 1000;
+  z-index: 1500;
   animation: fadeIn 0.3s ease-out;
+  overflow-y: auto;
 }
 
 .previewContainer {

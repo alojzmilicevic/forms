@@ -1,17 +1,32 @@
+import classNames from 'classnames'
 import styles from './styles/app.module.scss'
 import { Editor } from './editor/editor'
 import { Preview } from './preview/preview'
 import { Toolbar } from './components/toolbar/toolbar'
+import { Drawer } from './components/drawer/drawer'
+import { useEditorStore } from './store/editor-store'
 
 function App() {
-  return (
-    <div className={styles.outerContainer}>
-      <Toolbar />
+  const isDrawerOpen = useEditorStore((state) => state.customizeDrawerOpen)
+  const mode = useEditorStore((state) => state.mode)
 
-      <div className={styles.container}>
-        <Editor />
-        <Preview />
+  return (
+    <div className={styles.appWrapper}>
+      <div
+        className={classNames(styles.mainContent, {
+          [styles.drawerOpen]: isDrawerOpen,
+          [styles.previewMode]: mode === 'preview',
+        })}
+      >
+        <Toolbar />
+        <div className={styles.outerContainer}>
+          <div className={styles.container}>
+            <Editor />
+            <Preview />
+          </div>
+        </div>
       </div>
+      <Drawer />
     </div>
   )
 }
