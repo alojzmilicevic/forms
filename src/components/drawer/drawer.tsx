@@ -1,4 +1,5 @@
 import { useEditorStore } from '@/store/editor-store'
+import { ThemeCustomizer } from '@/components/theme-customizer/theme-customizer'
 import styles from './drawer.module.scss'
 
 export const Drawer = () => {
@@ -15,7 +16,7 @@ export const Drawer = () => {
           </button>
         </div>
         <div className={styles.drawerContent}>
-          <p>Drawer content will go here</p>
+          <ThemeCustomizer />
         </div>
       </div>
     </>

@@ -4,7 +4,7 @@ export const NumberIcon = () => (
     height="20px"
     viewBox="0 -960 960 960"
     width="20px"
-    fill="black"
+    fill="currentColor"
   >
     <path d="m264-192 30-120H144l18-72h150l42-168H192l18-72h162l36-144h72l-36 144h144l36-144h72l-36 144h156l-18 72H642l-42 168h168l-18 72H582l-30 120h-72l30-120H366l-30 120h-72Zm120-192h144l42-168H426l-42 168Z" />
   </svg>

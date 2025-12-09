@@ -13,11 +13,17 @@ $shadow-color-3: rgba(61, 59, 53, 0.08);
 .text-input {
   height: 36px;
   padding: 4px 12px;
-  font-size: 16px;
-  font-family: inherit;
+  font-size: var(--font-size);
+  font-family: var(--font-family);
   box-sizing: border-box;
-  color: $placeholder-color;
+  color: var(--color-text);
   max-width: 320px;
+  background-color: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+
+  &::placeholder {
+    color: var(--color-input-placeholder);
+  }
 
   &:focus {
     outline: none;
@@ -38,9 +44,9 @@ $shadow-color-3: rgba(61, 59, 53, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: $placeholder-color;
+  color: var(--color-input-placeholder);
   pointer-events: none;
-  opacity: 0.3;
+  opacity: 0.7;
 
   svg {
     width: 16px;
@@ -60,8 +66,8 @@ $shadow-color-3: rgba(61, 59, 53, 0.08);
 }
 
 .text-input-outlined {
-  background-color: #ffffff;
-  border: 0px;
+  background-color: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
   border-radius: $spacing-sm;
   box-shadow:
     $shadow-color-1 0px 1px 1px 0px,
@@ -78,13 +84,13 @@ $shadow-color-3: rgba(61, 59, 53, 0.08);
 }
 
 .text-input-filled {
-  background-color: #f5f5f5;
-  border: 0px;
+  background-color: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
   border-radius: $spacing-sm;
 
   &:focus {
     box-shadow:
-      0 0 0 1px rgba(0, 0, 0, 0.1),
-      0px 0px 0px 4px rgba(0, 0, 0, 0.1);
+      0 0 0 1px var(--color-input-border),
+      0px 0px 0px 4px var(--color-input-border);
   }
 }

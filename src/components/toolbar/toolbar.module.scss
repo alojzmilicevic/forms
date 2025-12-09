@@ -7,6 +7,16 @@
   right: 0;
   z-index: 100;
   background-color: #ffffff;
+
+  // Toolbar buttons should not be themed
+  :global(.button) {
+    color: #4b4b4b;
+
+    &:hover {
+      color: #000;
+      background-color: #f0f0f0;
+    }
+  }
 }
 
 .toolbarContent {

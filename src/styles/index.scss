@@ -1,4 +1,6 @@
 @use './variables' as *;
+@use './themes/variables' as *;
+@use './themes/classes' as *;
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
@@ -8,7 +10,7 @@
   font-weight: 400;
 
   color-scheme: light;
-  color: #213547;
+  color: #37352f;
   background-color: #ffffff;
 
   font-synthesis: none;
@@ -19,11 +21,11 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: #0070d7;
   text-decoration: inherit;
 
   &:hover {
-    color: #535bf2;
+    opacity: 0.8;
   }
 }
 
@@ -32,6 +34,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: #ffffff;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: #37352f;
 }
 
 h1 {
@@ -51,7 +55,7 @@ button {
   transition: border-color 0.25s;
 
   &:hover {
-    border-color: #646cff;
+    border-color: #0070d7;
   }
 
   &:focus,
@@ -63,24 +67,24 @@ button {
 // Global placeholder styles for all input fields
 input::placeholder,
 textarea::placeholder {
-  color: $placeholder-color;
+  color: #bbbab8;
   opacity: 1;
 }
 
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-  color: $placeholder-color;
+  color: #bbbab8;
   opacity: 1;
 }
 
 input::-moz-placeholder,
 textarea::-moz-placeholder {
-  color: $placeholder-color;
+  color: #bbbab8;
   opacity: 1;
 }
 
 input:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-  color: $placeholder-color;
+  color: #bbbab8;
   opacity: 1;
 }

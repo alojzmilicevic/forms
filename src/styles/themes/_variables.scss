@@ -1,0 +1,44 @@
+// Default theme (light)
+:root {
+  --color-background: #FFFFFF;
+}
+
+[data-theme='dark'] {
+  --color-background: #1A1917;
+}
+
+// Themed area specific variables
+.themed-area {
+  /* Typography */
+  --font-family: 'Inter', sans-serif;
+  --font-size: 14px;
+  
+  /* Colors */
+  --color-text: #37352F;
+  --color-button-bg: #000000;
+  --color-button-text: #FFFFFF;
+  --color-accent: #0070D7;
+  
+  /* Inputs */
+  --color-input-bg: transparent;
+  --color-input-placeholder: #bbbab8;
+  --color-input-border: #3d3b3529;
+}
+
+// Dark theme
+[data-theme='dark'] .themed-area {
+  --font-family: 'Inter', sans-serif;
+  --font-size: 14px;
+  --color-text: #DFDFDE;
+  --color-button-bg: #7957FF;
+  --color-button-text: #FFFFFF;
+  --color-accent: #7957FF;
+  --color-input-bg: #ffffff0e;
+  --color-input-placeholder: #5a5a5a;
+  --color-input-border: #d2d2d229;
+}
+
+// Custom theme - variables will be applied inline via JavaScript
+[data-theme='custom'] .themed-area {
+  /* Applied dynamically from theme store */
+}

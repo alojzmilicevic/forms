@@ -7,6 +7,8 @@
   min-width: 200px;
   font-family: inherit;
   line-height: 36px;
+  color: var(--color-text);
+  position: relative;
 
   &:focus {
     outline: none;
@@ -15,8 +17,11 @@
   // Show placeholder when empty
   &.empty::before {
     content: attr(data-placeholder);
-    color: $placeholder-color;
+    color: var(--color-input-placeholder);
     pointer-events: none;
+    position: absolute;
+    left: 0;
+    top: 0;
   }
 }
 

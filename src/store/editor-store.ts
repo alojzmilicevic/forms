@@ -91,11 +91,11 @@ const createBlock = (blockType: BlockType, blocks: Block[], groupId?: string): B
       return numberBlock
     }
     case 'h1':
-      return { ...baseBlock, type: 'h1', value: 'Heading 1' } as const
+      return { ...baseBlock, type: 'h1', value: '' } as const
     case 'h2':
-      return { ...baseBlock, type: 'h2', value: 'Heading 2' } as const
+      return { ...baseBlock, type: 'h2', value: '' } as const
     case 'h3':
-      return { ...baseBlock, type: 'h3', value: 'Heading 3' } as const
+      return { ...baseBlock, type: 'h3', value: '' } as const
     case 'text':
       return { ...baseBlock, type: 'text', value: '' } as const
     case 'color': {

@@ -4,7 +4,7 @@ export const SelectIcon = () => (
     height="20px"
     viewBox="0 -960 960 960"
     width="20px"
-    fill="#000000"
+    fill="currentColor"
   >
     <path d="M480-333 240-573l51-51 189 189 189-189 51 51-240 240Z" />
   </svg>

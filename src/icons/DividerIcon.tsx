@@ -4,7 +4,7 @@ export const DividerIcon = () => (
     height="20px"
     viewBox="0 -960 960 960"
     width="20px"
-    fill="#000000"
+    fill="currentColor"
   >
     <path d="M192-444v-72h576v72H192Z" />
   </svg>

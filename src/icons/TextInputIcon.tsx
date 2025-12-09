@@ -4,7 +4,7 @@ export const TextInputIcon = () => (
     height="20px"
     viewBox="0 -960 960 960"
     width="20px"
-    fill="#000000"
+    fill="currentColor"
   >
     <path d="M192-360v-72h384v72H192Zm0-168v-72h576v72H192Z" />
   </svg>

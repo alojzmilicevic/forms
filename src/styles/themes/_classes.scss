@@ -1,0 +1,67 @@
+/* Theme-aware classes for form blocks */
+
+.submit-button {
+  background-color: var(--color-button-bg);
+  color: var(--color-button-text);
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+}
+
+.block-text {
+  color: var(--color-text);
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+}
+
+.form-block-title {
+  color: var(--color-text);
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+}
+
+.block-heading-1 {
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+.block-heading-2 {
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+.block-heading-3 {
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+.block-divider {
+  border-color: var(--color-input-border);
+}
+
+.block-checkbox {
+  color: var(--color-text);
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+  accent-color: var(--color-accent);
+}
+
+.block-input-text,
+.block-input-number {
+  background-color: var(--color-input-bg);
+  color: var(--color-text);
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+  border: 1px solid var(--color-input-border);
+
+  &::placeholder {
+    color: var(--color-input-placeholder);
+  }
+}
+
+.block-input-color {
+  background-color: var(--color-input-bg);
+  border: 1px solid var(--color-input-border);
+  font-size: var(--font-size);
+  font-family: var(--font-family);
+}
+

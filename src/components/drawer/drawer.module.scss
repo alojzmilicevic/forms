@@ -39,6 +39,7 @@
   p {
     margin: 0;
     font-size: 12px;
+    color: #333;
   }
 }
 
@@ -67,6 +68,5 @@
 
 .drawerContent {
   flex: 1;
-  padding: $spacing-lg;
   overflow-y: auto;
 }
